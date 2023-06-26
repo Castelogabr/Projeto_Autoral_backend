@@ -6,7 +6,7 @@ import { loadEnv, connectDb, disconnectDB } from '@/config';
 
 loadEnv();
 
-import { authenticationRouter, usersRouter } from '@/routers';
+import { authenticationRouter, usersRouter, handbookRouter } from '@/routers';
 import { handleApplicationErrors } from '@/middlewares';
 
 const app = express();
@@ -15,6 +15,7 @@ app
   .use(json())
   .get('/health', (_req, res) => res.send('OK!'))
   .use('/signup', usersRouter)
+  .use('/handbook', handbookRouter)
   .use('/auth', authenticationRouter)
   .use(handleApplicationErrors);
 

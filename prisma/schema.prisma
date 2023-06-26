@@ -16,14 +16,37 @@ model User {
   password   String       @db.VarChar(255)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
-  Session    Session[]
+  Session    Session[]    
+  Enrollment Enrollment[] 
 }
 
 model Session {
   id        Int      @id @default(autoincrement())
   userId    Int
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   token     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+
+model Enrollment {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  cpf       String    @db.VarChar(255)
+  birthday  DateTime
+  phone     String    @db.VarChar(255)
+  userId    Int       @unique
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Handbook {
+  id         Int          @id @default(autoincrement())
+  professional String     @db.VarChar(255)
+  patient   String       @db.VarChar(255)
+  description  String       @db.VarChar(255)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
